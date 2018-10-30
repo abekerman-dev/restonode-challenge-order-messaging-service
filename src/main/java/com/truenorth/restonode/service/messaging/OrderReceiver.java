@@ -3,6 +3,7 @@ package com.truenorth.restonode.service.messaging;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonArray;
@@ -14,8 +15,9 @@ import com.truenorth.restonode.service.email.EmailService;
 public class OrderReceiver extends AbstractRabbitMQReceiver {
 
 	@Autowired
+	@Qualifier("mockEmailService")
 	private EmailService emailService;
-	
+
 	@Override
 	protected void handleMessage(JsonElement jsonTree) {
 		JsonObject jsonObject = jsonTree.getAsJsonObject();
@@ -30,7 +32,6 @@ public class OrderReceiver extends AbstractRabbitMQReceiver {
 
 	private String createEmailBody(JsonObject jsonOrder) {
 		StringBuilder sb = new StringBuilder();
-		
 		JsonArray meals = jsonOrder.getAsJsonArray("meals");
 		for (JsonElement mealElement : meals) {
 			JsonObject mealObject = mealElement.getAsJsonObject();
@@ -44,7 +45,7 @@ public class OrderReceiver extends AbstractRabbitMQReceiver {
 		sb.append(System.getProperty("line.separator"));
 		sb.append("Deliver to: ");
 		sb.append(jsonOrder.get("address"));
-		
+
 		return sb.toString();
 	}
 

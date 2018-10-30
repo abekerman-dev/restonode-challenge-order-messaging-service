@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.truenorth.restonode.service.email.EmailService;
+import com.truenorth.restonode.service.email.RealEmailService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SendGridMailSendTestSpringBoot {
 
 	@Autowired
-    private EmailService emailService;
+    private RealEmailService emailService;
     
     @Test
     public void testSend() throws IOException {
