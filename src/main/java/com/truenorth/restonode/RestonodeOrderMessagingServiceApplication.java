@@ -12,23 +12,35 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.truenorth.restonode.receiver.EventConsumer;
+import com.truenorth.restonode.service.messaging.NotificationReceiver;
+import com.truenorth.restonode.service.messaging.OrderReceiver;
 
 @SpringBootApplication
 public class RestonodeOrderMessagingServiceApplication {
 
+	@Value("${rabbitmq.queue.notification}")
+	private String notificationQueue;
+
+	@Value("${rabbitmq.queue.order}")
+	private String orderQueue;
+
 	@Value("${rabbitmq.exchange.name}")
 	private String exchangeName;
 	
-	@Value("${rabbitmq.routingKey}")
-	private String routingKey;
+	@Value("${rabbitmq.routingKey.notification}")
+	private String notificationRoutingKey;
 	
-	@Value("${rabbitmq.routingKey}")
-	private String queueName;
+	@Value("${rabbitmq.routingKey.order}")
+	private String orderRoutingKey;
 
 	@Bean
-	Queue queue() {
-		return new Queue(queueName, false);
+	Queue notificationQueue() {
+		return new Queue(notificationQueue, false);
+	}
+	
+	@Bean
+	Queue orderQueue() {
+		return new Queue(orderQueue, false);
 	}
 
 	@Bean
@@ -37,23 +49,45 @@ public class RestonodeOrderMessagingServiceApplication {
 	}
 
 	@Bean
-	Binding binding(Queue queue, TopicExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+	Binding bindNotification(Queue notificationQueue, TopicExchange exchange) {
+		return BindingBuilder.bind(notificationQueue).to(exchange).with(notificationRoutingKey);
 	}
 
 	@Bean
-	SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-			MessageListenerAdapter listenerAdapter) {
+	Binding bindOrder(Queue orderQueue, TopicExchange exchange) {
+		return BindingBuilder.bind(orderQueue).to(exchange).with(orderRoutingKey);
+	}
+
+	@Bean
+	SimpleMessageListenerContainer notificationContainer(ConnectionFactory connectionFactory,
+			MessageListenerAdapter notificationListenerAdapter) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
-		container.setQueueNames(queueName);
-		container.setMessageListener(listenerAdapter);
+		container.setQueueNames(notificationQueue);
+		container.setMessageListener(notificationListenerAdapter);
+		
 		return container;
 	}
 
 	@Bean
-	MessageListenerAdapter listenerAdapter(EventConsumer receiver) {
-		return new MessageListenerAdapter(receiver, "receiveMessage");
+	SimpleMessageListenerContainer orderContainer(ConnectionFactory connectionFactory,
+			MessageListenerAdapter orderListenerAdapter) {
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConnectionFactory(connectionFactory);
+		container.setQueueNames(orderQueue);
+		container.setMessageListener(orderListenerAdapter);
+		
+		return container;
+	}
+
+	@Bean
+	MessageListenerAdapter notificationListenerAdapter(NotificationReceiver receiver) {
+		return new MessageListenerAdapter(receiver, "receive");
+	}
+
+	@Bean
+	MessageListenerAdapter orderListenerAdapter(OrderReceiver receiver) {
+		return new MessageListenerAdapter(receiver, "receive");
 	}
 
 	public static void main(String[] args) throws InterruptedException {
