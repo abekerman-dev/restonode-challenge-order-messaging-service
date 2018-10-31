@@ -10,6 +10,6 @@ services:
       - "8081:8081"
     environment:
       - RABBIT_HOST=rabbitmq
-      - SENDGRID_API_KEY=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
+      - SENDGRID_API_KEY=<PASTE SENDGRID API KEY HERE - REAL KEY NOT PUSHED TO GITHUB> 
     networks:
       - rabbitmq-network
