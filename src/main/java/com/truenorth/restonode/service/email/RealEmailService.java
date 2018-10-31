@@ -11,6 +11,7 @@ import com.sendgrid.Mail;
 import com.sendgrid.Method;
 import com.sendgrid.Personalization;
 import com.sendgrid.Request;
+import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,9 +49,9 @@ public class RealEmailService implements EmailService {
 		log.debug("Executing sendgrid API call");
 		log.debug("toEmail=" + toEmail);
 		log.debug("body=" + body);
-//		sendGrid = new SendGrid(apiKey);
-//		Response response = sendGrid.api(request);
-//		log.debug("Status Code from call to sendgrid API -> " + response.getStatusCode());
+		sendGrid = new SendGrid(apiKey);
+		Response response = sendGrid.api(request);
+		log.debug("Status Code from call to sendgrid API -> " + response.getStatusCode());
 	}
 
 	private Mail getMailBody(String toEmail, String body) {

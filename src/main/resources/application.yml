@@ -18,8 +18,8 @@ spring:
 sendgrid:
   sendEndpoint: mail/send
   from:
-    name: Restonode Messaging System
-    email: orders@restonode-messaging.truenorth.com
+    name: Restonode Messaging Service
+    email: no-reply@restonode-messaging-service.truenorth.com
   subject: New Delivery Order Notification
   content:
     type: text/plain
