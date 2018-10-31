@@ -15,7 +15,7 @@ public class OrderReceiverTest {
 
 	@Autowired
 	private OrderReceiver orderReceiver;
-	
+
 	private static String jsonMessage;
 
 	@BeforeClass

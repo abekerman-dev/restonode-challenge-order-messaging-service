@@ -18,26 +18,26 @@ import com.truenorth.restonode.service.messaging.OrderReceiver;
 @SpringBootApplication
 public class RestonodeOrderMessagingServiceApplication {
 
-	@Value("${rabbitmq.queue.notification}")
+	@Value("${spring.rabbitmq.queue.notification}")
 	private String notificationQueue;
 
-	@Value("${rabbitmq.queue.order}")
+	@Value("${spring.rabbitmq.queue.order}")
 	private String orderQueue;
 
-	@Value("${rabbitmq.exchange.name}")
+	@Value("${spring.rabbitmq.exchange.name}")
 	private String exchangeName;
-	
-	@Value("${rabbitmq.routingKey.notification}")
+
+	@Value("${spring.rabbitmq.routingKey.notification}")
 	private String notificationRoutingKey;
-	
-	@Value("${rabbitmq.routingKey.order}")
+
+	@Value("${spring.rabbitmq.routingKey.order}")
 	private String orderRoutingKey;
 
 	@Bean
 	Queue notificationQueue() {
 		return new Queue(notificationQueue, false);
 	}
-	
+
 	@Bean
 	Queue orderQueue() {
 		return new Queue(orderQueue, false);
@@ -65,7 +65,7 @@ public class RestonodeOrderMessagingServiceApplication {
 		container.setConnectionFactory(connectionFactory);
 		container.setQueueNames(notificationQueue);
 		container.setMessageListener(notificationListenerAdapter);
-		
+
 		return container;
 	}
 
@@ -76,7 +76,7 @@ public class RestonodeOrderMessagingServiceApplication {
 		container.setConnectionFactory(connectionFactory);
 		container.setQueueNames(orderQueue);
 		container.setMessageListener(orderListenerAdapter);
-		
+
 		return container;
 	}
 

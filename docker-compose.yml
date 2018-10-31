@@ -1,0 +1,15 @@
+version: '3.7'
+networks:
+  rabbitmq-network:
+    external:
+      name: network-where-rabbitmq-lives
+services:
+  restonode-order-messaging-service:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      - RABBIT_HOST=rabbitmq
+      - SENDGRID_API_KEY=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
+    networks:
+      - rabbitmq-network

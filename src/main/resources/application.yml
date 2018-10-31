@@ -1,0 +1,25 @@
+logging:
+  level:
+    org.springframework.web: INFO
+    com.truenorth.restonode: DEBUG
+
+spring:
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    queue:
+      notification: restonode_queue_notification
+      order: restonode_queue_order
+    exchange:
+      name: restonode_topic_exchange
+    routingKey:
+      notification: restonode_routingKey_notification
+      order: restonode_routingKey_order
+
+sendgrid:
+  sendEndpoint: mail/send
+  from:
+    name: Restonode Messaging System
+    email: orders@restonode-messaging.truenorth.com
+  subject: New Delivery Order Notification
+  content:
+    type: text/plain

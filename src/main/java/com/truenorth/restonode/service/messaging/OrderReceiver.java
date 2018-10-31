@@ -15,7 +15,8 @@ import com.truenorth.restonode.service.email.EmailService;
 public class OrderReceiver extends AbstractRabbitMQReceiver {
 
 	@Autowired
-	@Qualifier("mockEmailService")
+//	@Qualifier("mockEmailService")
+	@Qualifier("realEmailService")
 	private EmailService emailService;
 
 	@Override
