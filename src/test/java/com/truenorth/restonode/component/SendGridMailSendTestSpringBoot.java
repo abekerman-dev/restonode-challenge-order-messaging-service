@@ -1,4 +1,4 @@
-package com.truenorth.restonode.sendgrid;
+package com.truenorth.restonode.component;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.truenorth.restonode.service.email.RealEmailService;
+import com.truenorth.restonode.service.email.SendGridService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SendGridMailSendTestSpringBoot {
 
 	@Autowired
-    private RealEmailService emailService;
+    private SendGridService emailService;
     
     @Test
     public void testSend() throws IOException {

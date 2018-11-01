@@ -12,9 +12,7 @@ public class MockEmailService implements EmailService {
 
 	@Override
 	public void send(String toEmail, String body) throws IOException {
-		log.debug("Mock sending email to " + toEmail);
-		log.debug("with body:");
-		log.debug(body);
+		log.debug("Mock sending email to " + toEmail + " with body:" + body);
 	}
 
 }

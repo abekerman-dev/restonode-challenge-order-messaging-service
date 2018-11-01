@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class RealEmailService implements EmailService {
+public class SendGridService implements EmailService {
 
 	@Value("${sendgrid.sendEndpoint}")
 	private String sendEndpoint;
