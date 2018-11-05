@@ -12,8 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.truenorth.restonode.service.messaging.NotificationReceiver;
-import com.truenorth.restonode.service.messaging.OrderReceiver;
+import com.truenorth.restonode.service.messaging.CustomerNotificationReceiver;
+import com.truenorth.restonode.service.messaging.RestaurantOrderReceiver;
 
 @SpringBootApplication
 public class RestonodeOrderMessagingServiceApplication {
@@ -81,12 +81,12 @@ public class RestonodeOrderMessagingServiceApplication {
 	}
 
 	@Bean
-	MessageListenerAdapter notificationListenerAdapter(NotificationReceiver receiver) {
+	MessageListenerAdapter notificationListenerAdapter(CustomerNotificationReceiver receiver) {
 		return new MessageListenerAdapter(receiver, "receive");
 	}
 
 	@Bean
-	MessageListenerAdapter orderListenerAdapter(OrderReceiver receiver) {
+	MessageListenerAdapter orderListenerAdapter(RestaurantOrderReceiver receiver) {
 		return new MessageListenerAdapter(receiver, "receive");
 	}
 
