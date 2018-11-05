@@ -14,8 +14,8 @@ public class RestaurantOrderReceiver extends AbstractRabbitMQReceiver {
 
 	// FIXME switcht to sendGridService
 	@Autowired
-	@Qualifier("mockEmailService")
-//	@Qualifier("sendGridService")
+//	@Qualifier("mockEmailService")
+	@Qualifier("sendGridService")
 	private EmailService emailService;
 
 	@Override
@@ -26,16 +26,21 @@ public class RestaurantOrderReceiver extends AbstractRabbitMQReceiver {
 
 	private String createEmailBody(JsonObject restaurantOrderMessage) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append("Order #: " + restaurantOrderMessage.get("id"));
-		sb.append(System.getProperty("line.separator"));
-		sb.append("Placed: " + restaurantOrderMessage.get("timestamp"));
-		sb.append(System.getProperty("line.separator"));
+		sb.append("<b>Order #:</b>&nbsp;" + restaurantOrderMessage.get("id"));
+		sb.append("<br><br>");
+		sb.append("<b>Date & time placed:</b>&nbsp;" + restaurantOrderMessage.get("timestamp").getAsString().replaceAll("\"", ""));
+		sb.append("<br><br>");
+		sb.append("<b>Meals ordered:</b>");
+		sb.append("<br><br>");
 		final JsonArray meals = restaurantOrderMessage.get("meals").getAsJsonArray();
 		for (JsonElement mealElement : meals) {
+			sb.append("&nbsp;&nbsp;&nbsp;* ");
+			sb.append("<i>");
 			sb.append(mealElement.getAsString());
-			sb.append(System.getProperty("line.separator"));
+			sb.append("</i><br>");
 		}
-		sb.append("Deliver to: ");
+		sb.append("<br>");
+		sb.append("<b>Deliver to:</b>&nbsp;");
 		sb.append(restaurantOrderMessage.get("address").getAsString());
 
 		return sb.toString();

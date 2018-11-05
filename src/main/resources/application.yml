@@ -22,4 +22,4 @@ sendgrid:
     email: no-reply@restonode-messaging-service.truenorth.com
   subject: New Delivery Order Notification
   content:
-    type: text/plain
+    type: text/html
