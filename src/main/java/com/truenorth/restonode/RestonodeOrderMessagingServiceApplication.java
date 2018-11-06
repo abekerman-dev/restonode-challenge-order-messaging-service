@@ -90,7 +90,7 @@ public class RestonodeOrderMessagingServiceApplication {
 		return new MessageListenerAdapter(receiver, "receive");
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		SpringApplication.run(RestonodeOrderMessagingServiceApplication.class, args);
 	}
 

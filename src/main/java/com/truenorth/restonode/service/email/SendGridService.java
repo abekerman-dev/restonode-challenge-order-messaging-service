@@ -35,8 +35,6 @@ public class SendGridService implements EmailService {
 	@Value("${sendgrid.content.type}")
 	private String contentType;
 
-	private SendGrid sendGrid;
-
 	@Value("${SENDGRID_API_KEY}")
 	private String apiKey;
 
@@ -49,7 +47,7 @@ public class SendGridService implements EmailService {
 		log.debug("Executing sendgrid API call");
 		log.debug("toEmail=" + toEmail);
 		log.debug("body=" + body);
-		sendGrid = new SendGrid(apiKey);
+		final SendGrid sendGrid = new SendGrid(apiKey);
 		Response response = sendGrid.api(request);
 		log.debug("Status Code from call to sendgrid API -> " + response.getStatusCode());
 	}
