@@ -1,15 +1,16 @@
 version: '3.7'
+
 networks:
-  rabbitmq-network:
+  dependency-network:
     external:
-      name: network-where-rabbitmq-lives
+      name: backend-network
+
 services:
+
   restonode-order-messaging-service:
     build: .
-    ports:
-      - "8081:8081"
+    networks:
+      - dependency-network
     environment:
       - RABBIT_HOST=rabbitmq
-      - SENDGRID_API_KEY=<PASTE SENDGRID API KEY HERE - REAL KEY NOT PUSHED TO GITHUB> 
-    networks:
-      - rabbitmq-network
+      - SENDGRID_API_KEY=WATCH OUT!-REPLACE THIS WITH PROVIDED API KEY!
